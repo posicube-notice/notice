@@ -26,8 +26,29 @@
 <img src="./img/posicube2.png" usemap="#image-map">
 
 <map name="image-map">
-    <area target="_blank" alt="지도보기" title="지도보기" href="https://naver.me/GQ1l2wGh" coords="358,313,475,349" shape="rect">
-    <area target="_blank" alt="사전등록" title="사전등록" href="https://forms.office.com/r/vgDWUx2fgk" coords="446,1002,156,930" shape="rect">
+    <area target="_blank" alt="지도보기" title="지도보기" href="https://naver.me/GQ1l2wGh" data-coords="342,267,508,396" shape="rect">
+    <area target="_blank" alt="사전등록" title="사전등록" href="https://forms.office.com/r/vgDWUx2fgk" data-coords="497,1101,105,808" shape="rect">
 </map>
+
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/image-map-resizer@1.0.10/js/imageMapResizer.min.js"></script>
+<script>
+    window.addEventListener('resize', resizeMap);
+    window.addEventListener('load', resizeMap);
+
+    function resizeMap() {
+        const img = document.querySelector('img[usemap]');
+        const map = document.querySelector('map');
+        const originalWidth = 640; // 원본 이미지 너비 (px)
+        
+        const scale = img.clientWidth / originalWidth;
+
+        const areas = map.querySelectorAll('area');
+        areas.forEach(area => {
+            const coords = area.dataset.coords.split(',').map(coord => Math.round(coord * scale));
+            area.coords = coords.join(',');
+        });
+    }
+</script>
 </html>
